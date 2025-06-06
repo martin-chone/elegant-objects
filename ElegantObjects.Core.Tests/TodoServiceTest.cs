@@ -86,10 +86,10 @@ namespace ElegantObjects.Core.Tests
 
             todoService.Done("Fini");
 
-            var todoDone = todoService.Todos().First(t => t.GetTitle() == "Fini");
-            todoDone.GetTitle().Should().Be("Fini");
-            todoDone.GetIsDone().Should().BeTrue();
-            todoDone.GetDoneAt().Should().NotBeNull();
+            var todoDone = todoService.Todos().First(t => t.Title == "Fini");
+            todoDone.Title.Should().Be("Fini");
+            todoDone.IsDone.Should().BeTrue();
+            todoDone.DoneAt.Should().NotBeNull();
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace ElegantObjects.Core.Tests
 
             var todos = todoService.Add("John Doe", "toto", "front todo");
 
-            todos[0].GetIdGroup().Should().Be("front todo");
+            todos[0].IdGroup.Should().Be("front todo");
         }
 
         [Fact]

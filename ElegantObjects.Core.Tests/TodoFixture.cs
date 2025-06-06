@@ -5,52 +5,52 @@
         public static Todo DefaultTodo()
         {
             return Todo.Builder()
-                    .Title("todos")
-                    .IsDone(false)
-                    .Author("John Doe")
-                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .TitleOf("todos")
+                    .IsDoneAs(false)
+                    .AuthorOf("John Doe")
+                    .CreatedAtDate(new DateTime(2025, 4, 23, 10, 25, 0))
                     .Build();
         }
 
         public static Todo WithTitle(String title)
         {
             return Todo.Builder()
-                    .Title(title)
-                    .IsDone(false)
-                    .Author("John Doe")
-                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .TitleOf(title)
+                    .IsDoneAs(false)
+                    .AuthorOf("John Doe")
+                    .CreatedAtDate(new DateTime(2025, 4, 23, 10, 25, 0))
                     .Build();
         }
 
         public static Todo WithTitleAndCreatedAt(String title, DateTime createdAt)
         {
             return Todo.Builder()
-                .Title(title)
-                .IsDone(false)
-                .Author("John Doe")
-                .CreatedAt(createdAt)
+                .TitleOf(title)
+                .IsDoneAs(false)
+                .AuthorOf("John Doe")
+                .CreatedAtDate(createdAt)
                 .Build();
         }
 
         public static Todo WithTitleAndDone(String title)
         {
             return Todo.Builder()
-                    .Title(title)
-                    .IsDone(true)
-                    .Author("John Doe")
-                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .DoneAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .TitleOf(title)
+                    .IsDoneAs(true)
+                    .AuthorOf("John Doe")
+                    .CreatedAtDate(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .DoneAtDate(new DateTime(2025, 4, 23, 10, 25, 0))
                     .Build();
         }
 
         public static Todo WithGroupdId(String idGroup)
         {
             return Todo.Builder()
-                    .Title("todos")
-                    .IsDone(false)
-                    .Author("John Doe")
-                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .IdGroup(idGroup)
+                    .TitleOf("todos")
+                    .IsDoneAs(false)
+                    .AuthorOf("John Doe")
+                    .CreatedAtDate(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .WithGroup(idGroup)
                     .Build();
         }
 

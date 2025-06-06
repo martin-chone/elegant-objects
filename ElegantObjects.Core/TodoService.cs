@@ -32,10 +32,10 @@
             }
         
             todoRepository.Save(Todo.Builder()
-                    .Title(title)
-                    .IsDone(false)
-                    .Author(author)
-                    .CreatedAt(DateTime.Now)
+                    .TitleOf(title)
+                    .IsDoneAs(false)
+                    .AuthorOf(author)
+                    .CreatedAtDate(DateTime.Now)
                     .Build());
 
             return todoRepository.GetAll();
@@ -50,12 +50,12 @@
                 throw new InvalidOperationException($"'{title}' does not exist");
             }
 
-            if (todo.GetIsDone())
+            if (todo.IsDone)
             {
                 throw new InvalidOperationException($"'{title}' is already done");
             }
 
-            todo.SetDone(true);
+            todo.IsDone = true;
             todoRepository.Save(todo);
         }
 
@@ -77,11 +77,11 @@
             }
 
             todoRepository.Save(Todo.Builder()
-                    .Title(title)
-                    .IsDone(false)
-                    .Author(author)
-                    .CreatedAt(DateTime.Now)
-                    .IdGroup(idGroup)
+                    .TitleOf(title)
+                    .IsDoneAs(false)
+                    .AuthorOf(author)
+                    .CreatedAtDate(DateTime.Now)
+                    .WithGroup(idGroup)
                     .Build());
 
             return todoRepository.GetAll();
