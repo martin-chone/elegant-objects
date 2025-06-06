@@ -12,71 +12,71 @@
 
         private Todo(TodoBuilder builder)
         {
-            title = builder.getTitle();
-            description = builder.getDescription();
-            isDone = builder.getIsDone();
-            author = builder.getAuthor();
-            createdAt = builder.getCreatedAt();
-            doneAt = builder.getDoneAt();
-            idGroup = builder.getIdGroup();
+            title = builder.GetTitle();
+            description = builder.GetDescription();
+            isDone = builder.GetIsDone();
+            author = builder.GetAuthor();
+            createdAt = builder.GetCreatedAt();
+            doneAt = builder.GetDoneAt();
+            idGroup = builder.GetIdGroup();
         }
 
-        public static ITodoTitleBuilder builder()
+        public static ITodoTitleBuilder Builder()
         {
             return new TodoBuilder();
         }
 
-        public string? getTitle()
+        public string? GetTitle()
         {
             return title;
         }
 
-        public void setTitle(string? title)
+        public void SetTitle(string? title)
         {
             this.title = title;
         }
 
-        public bool getIsDone()
+        public bool GetIsDone()
         {
             return isDone;
         }
 
-        public void setDone(bool done)
+        public void SetDone(bool done)
         {
             isDone = done;
         }
 
-        public string? getAuthor()
+        public string? GetAuthor()
         {
             return author;
         }
 
-        public void setAuthor(string? author)
+        public void SetAuthor(string? author)
         {
             this.author = author;
         }
 
-        public DateTime? getCreatedAt()
+        public DateTime? GetCreatedAt()
         {
             return createdAt;
         }
 
-        public void setCreatedAt(DateTime? createdAt)
+        public void SetCreatedAt(DateTime? createdAt)
         {
             this.createdAt = createdAt;
         }
 
-        public string? getIdGroup()
+        public string? GetIdGroup()
         {
             return idGroup;
         }
 
-        public void setIdGroup(string? idGroup)
+        public void SetIdGroup(string? idGroup)
         {
             this.idGroup = idGroup;
         }
 
-        public bool equals(Object obj)
+        public bool Equals(Object obj)
         {
             if (ReferenceEquals(this, obj)) return true;
             if (obj is null || obj.GetType() != this.GetType()) return false;
@@ -86,32 +86,32 @@
                    this.isDone == that.isDone;
         }
 
-        public DateTime? getDoneAt()
+        public DateTime? GetDoneAt()
         {
             return doneAt;
         }
 
-        public void setDoneAt(DateTime doneAt)
+        public void SetDoneAt(DateTime doneAt)
         {
             this.doneAt = doneAt;
         }
 
-        public string? getDescription()
+        public string? GetDescription()
         {
             return description;
         }
 
-        public void setDescription(string? description)
+        public void SetDescription(string? description)
         {
             this.description = description;
         }
 
-        public int hashCode()
+        public int HashCode()
         {
-            return HashCode.Combine(title, isDone);
+            return System.HashCode.Combine<string, bool>(title, isDone);
         }
 
-        public string tostring()
+        public string Tostring()
         {
             return "Todo{" +
                     "title='" + title + '\'' +
@@ -126,30 +126,30 @@
 
         public interface ITodoTitleBuilder
         {
-            ITodoIsDoneBuilder title(string? title);
+            ITodoIsDoneBuilder Title(string? title);
         }
 
         public interface ITodoIsDoneBuilder
         {
-            ITodoAuthorBuilder isDone(bool isDone);
+            ITodoAuthorBuilder IsDone(bool isDone);
         }
 
         public interface ITodoAuthorBuilder
         {
-            ITodoCreatedAtBuilder author(string? author);
+            ITodoCreatedAtBuilder Author(string? author);
         }
 
         public interface ITodoCreatedAtBuilder
         {
-            ITodoOptionalBuilder createdAt(DateTime? createdAt);
+            ITodoOptionalBuilder CreatedAt(DateTime? createdAt);
         }
 
         public interface ITodoOptionalBuilder
         {
-            ITodoOptionalBuilder description(string? description);
-            ITodoOptionalBuilder doneAt(DateTime? doneAt);
-            ITodoOptionalBuilder idGroup(string? idGroup);
-            Todo build();
+            ITodoOptionalBuilder Description(string? description);
+            ITodoOptionalBuilder DoneAt(DateTime? doneAt);
+            ITodoOptionalBuilder IdGroup(string? idGroup);
+            Todo Build();
         }
 
         private sealed class TodoBuilder : ITodoTitleBuilder,
@@ -167,91 +167,91 @@
             private DateTime? _doneAt;
             private string? _idGroup;
 
-            public string? getTitle()
+            public string? GetTitle()
             {
                 return _title;
             }
 
-            public bool getIsDone()
+            public bool GetIsDone()
             {
                 return _isDone;
             }
 
-            public string? getDescription()
+            public string? GetDescription()
             {
                 return _description;
             }
 
-            public string? getAuthor()
+            public string? GetAuthor()
             {
                 return _author;
             }
 
-            public DateTime? getCreatedAt()
+            public DateTime? GetCreatedAt()
             {
                 return _createdAt;
             }
 
-            public DateTime? getDoneAt()
+            public DateTime? GetDoneAt()
             {
                 return _doneAt;
             }
 
-            public string? getIdGroup()
+            public string? GetIdGroup()
             {
                 return _idGroup;
             }
 
-            public ITodoIsDoneBuilder title(string? title)
+            public ITodoIsDoneBuilder Title(string? title)
             {
                 _title = title;
 
                 return this;
             }
 
-            public ITodoAuthorBuilder isDone(bool isDone)
+            public ITodoAuthorBuilder IsDone(bool isDone)
             {
                 _isDone = isDone;
 
                 return this;
             }
 
-            public ITodoCreatedAtBuilder author(string? author)
+            public ITodoCreatedAtBuilder Author(string? author)
             {
                 _author = author;
 
                 return this;
             }
 
-            public ITodoOptionalBuilder createdAt(DateTime? createdAt)
+            public ITodoOptionalBuilder CreatedAt(DateTime? createdAt)
             {
                 _createdAt = createdAt;
 
                 return this;
             }
 
-            public ITodoOptionalBuilder doneAt(DateTime? doneAt)
+            public ITodoOptionalBuilder DoneAt(DateTime? doneAt)
             {
                 _doneAt = doneAt;
 
                 return this;
             }
 
-            public ITodoOptionalBuilder idGroup(string? idGroup)
+            public ITodoOptionalBuilder IdGroup(string? idGroup)
             {
                 _idGroup = idGroup;
 
                 return this;
             }
 
-            public ITodoOptionalBuilder description(string? description)
+            public ITodoOptionalBuilder Description(string? description)
             {
                 _description = description;
 
                 return this;
             }
 
-            public Todo build()
+            public Todo Build()
             {
                 return new Todo(this);
             }

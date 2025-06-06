@@ -2,56 +2,56 @@
 {
     public static class TodoFixture
     {
-        public static Todo defaultTodo()
+        public static Todo DefaultTodo()
         {
-            return Todo.builder()
-                    .title("todos")
-                    .isDone(false)
-                    .author("John Doe")
-                    .createdAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .build();
+            return Todo.Builder()
+                    .Title("todos")
+                    .IsDone(false)
+                    .Author("John Doe")
+                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .Build();
         }
 
-        public static Todo withTitle(String title)
+        public static Todo WithTitle(String title)
         {
-            return Todo.builder()
-                    .title(title)
-                    .isDone(false)
-                    .author("John Doe")
-                    .createdAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .build();
+            return Todo.Builder()
+                    .Title(title)
+                    .IsDone(false)
+                    .Author("John Doe")
+                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .Build();
         }
 
-        public static Todo withTitleAndCreatedAt(String title, DateTime createdAt)
+        public static Todo WithTitleAndCreatedAt(String title, DateTime createdAt)
         {
-            return Todo.builder()
-                .title(title)
-                .isDone(false)
-                .author("John Doe")
-                .createdAt(createdAt)
-                .build();
+            return Todo.Builder()
+                .Title(title)
+                .IsDone(false)
+                .Author("John Doe")
+                .CreatedAt(createdAt)
+                .Build();
         }
 
-        public static Todo withTitleAndDone(String title)
+        public static Todo WithTitleAndDone(String title)
         {
-            return Todo.builder()
-                    .title(title)
-                    .isDone(true)
-                    .author("John Doe")
-                    .createdAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .doneAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .build();
+            return Todo.Builder()
+                    .Title(title)
+                    .IsDone(true)
+                    .Author("John Doe")
+                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .DoneAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .Build();
         }
 
-        public static Todo withGroupdId(String idGroup)
+        public static Todo WithGroupdId(String idGroup)
         {
-            return Todo.builder()
-                    .title("todos")
-                    .isDone(false)
-                    .author("John Doe")
-                    .createdAt(new DateTime(2025, 4, 23, 10, 25, 0))
-                    .idGroup(idGroup)
-                    .build();
+            return Todo.Builder()
+                    .Title("todos")
+                    .IsDone(false)
+                    .Author("John Doe")
+                    .CreatedAt(new DateTime(2025, 4, 23, 10, 25, 0))
+                    .IdGroup(idGroup)
+                    .Build();
         }
 
     }

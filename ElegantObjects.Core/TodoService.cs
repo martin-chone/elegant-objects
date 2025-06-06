@@ -9,14 +9,14 @@
             this.todoRepository = todoRepository;
         }
 
-        public List<Todo> todos()
+        public List<Todo> Todos()
         {
-            return todoRepository.getAll();
+            return todoRepository.GetAll();
         }
 
-        public List<Todo> add(String title, String author)
+        public List<Todo> Add(String title, String author)
         {
-            if (todoRepository.find(title) is not null)
+            if (todoRepository.Find(title) is not null)
             {
                 throw new InvalidOperationException($"'{title}' already exist");
             }
@@ -31,37 +31,37 @@
                 throw new ArgumentException("Author is mandatory");
             }
         
-            todoRepository.save(Todo.builder()
-                    .title(title)
-                    .isDone(false)
-                    .author(author)
-                    .createdAt(DateTime.Now)
-                    .build());
+            todoRepository.Save(Todo.Builder()
+                    .Title(title)
+                    .IsDone(false)
+                    .Author(author)
+                    .CreatedAt(DateTime.Now)
+                    .Build());
 
-            return todoRepository.getAll();
+            return todoRepository.GetAll();
         }
 
-        public void done(String title)
+        public void Done(String title)
         {
-            var todo = todoRepository.find(title);
+            var todo = todoRepository.Find(title);
 
             if (todo == null)
             {
                 throw new InvalidOperationException($"'{title}' does not exist");
             }
 
-            if (todo.getIsDone())
+            if (todo.GetIsDone())
             {
                 throw new InvalidOperationException($"'{title}' is already done");
             }
 
-            todo.setDone(true);
-            todoRepository.save(todo);
+            todo.SetDone(true);
+            todoRepository.Save(todo);
         }
 
-        public List<Todo> add(String author, String title, String idGroup)
+        public List<Todo> Add(String author, String title, String idGroup)
         {
-            if (todoRepository.find(title) is not null)
+            if (todoRepository.Find(title) is not null)
             {
                 throw new InvalidOperationException($"'{title}' already exists");
             }
@@ -76,15 +76,15 @@
                 throw new ArgumentException("Author is mandatory");
             }
 
-            todoRepository.save(Todo.builder()
-                    .title(title)
-                    .isDone(false)
-                    .author(author)
-                    .createdAt(DateTime.Now)
-                    .idGroup(idGroup)
-                    .build());
+            todoRepository.Save(Todo.Builder()
+                    .Title(title)
+                    .IsDone(false)
+                    .Author(author)
+                    .CreatedAt(DateTime.Now)
+                    .IdGroup(idGroup)
+                    .Build());
 
-            return todoRepository.getAll();
+            return todoRepository.GetAll();
         }
 
     }
