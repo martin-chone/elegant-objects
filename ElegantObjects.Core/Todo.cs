@@ -26,14 +26,14 @@
             return new TodoBuilder();
         }
 
-        public bool Equals(Object obj)
+        public bool Equals(object? obj)
         {
             if (ReferenceEquals(this, obj)) return true;
             if (obj is null || obj.GetType() != this.GetType()) return false;
 
             var that = (Todo)obj;
-            return string.Equals(this.Title, that.Title) &&
-                   this.IsDone == that.IsDone;
+            return string.Equals(Title, that.Title) &&
+                   IsDone == that.IsDone;
         }
 
         public int HashCode()

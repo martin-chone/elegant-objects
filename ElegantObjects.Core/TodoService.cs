@@ -14,7 +14,7 @@
             return _todoRepository.GetAll();
         }
 
-        public List<Todo> Add(String title, String author)
+        public List<Todo> Add(string? title, string? author)
         {
             if (_todoRepository.Find(title) is not null)
             {
@@ -41,7 +41,7 @@
             return _todoRepository.GetAll();
         }
 
-        public void Done(String title)
+        public void Done(string? title)
         {
             var todo = _todoRepository.Find(title);
 
@@ -59,7 +59,7 @@
             _todoRepository.Save(todo);
         }
 
-        public List<Todo> Add(String author, String title, String idGroup)
+        public List<Todo> Add(string? author, string? title, string? idGroup)
         {
             if (_todoRepository.Find(title) is not null)
             {
