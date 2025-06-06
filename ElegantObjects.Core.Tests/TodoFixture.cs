@@ -24,7 +24,12 @@
 
         public static Todo withTitleAndCreatedAt(String title, DateTime createdAt)
         {
-            return Todo.builder().title(title).isDone(false).author("John Doe").createdAt(createdAt).build();
+            return Todo.builder()
+                .title(title)
+                .isDone(false)
+                .author("John Doe")
+                .createdAt(createdAt)
+                .build();
         }
 
         public static Todo withTitleAndDone(String title)
