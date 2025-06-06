@@ -26,7 +26,7 @@
             return new TodoBuilder();
         }
 
-        public bool Equals(object? obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(this, obj)) return true;
             if (obj is null || obj.GetType() != this.GetType()) return false;
@@ -36,12 +36,12 @@
                    IsDone == that.IsDone;
         }
 
-        public int HashCode()
+        public override int GetHashCode()
         {
-            return System.HashCode.Combine<string, bool>(Title, IsDone);
+            return HashCode.Combine<string, bool>(Title, IsDone);
         }
 
-        public string Tostring()
+        public override string ToString()
         {
             return "Todo{" +
                     "title='" + Title + '\'' +
