@@ -2,21 +2,21 @@
 {
     public class TodoService
     {
-        private readonly TodoRepository todoRepository;
+        private readonly TodoRepository _todoRepository;
 
         public TodoService(TodoRepository todoRepository)
         {
-            this.todoRepository = todoRepository;
+            _todoRepository = todoRepository;
         }
 
         public List<Todo> Todos()
         {
-            return todoRepository.GetAll();
+            return _todoRepository.GetAll();
         }
 
         public List<Todo> Add(String title, String author)
         {
-            if (todoRepository.Find(title) is not null)
+            if (_todoRepository.Find(title) is not null)
             {
                 throw new InvalidOperationException($"'{title}' already exist");
             }
@@ -31,19 +31,19 @@
                 throw new ArgumentException("Author is mandatory");
             }
         
-            todoRepository.Save(Todo.Builder()
+            _todoRepository.Save(Todo.Builder()
                     .TitleOf(title)
                     .IsDoneAs(false)
                     .AuthorOf(author)
                     .CreatedAtDate(DateTime.Now)
                     .Build());
 
-            return todoRepository.GetAll();
+            return _todoRepository.GetAll();
         }
 
         public void Done(String title)
         {
-            var todo = todoRepository.Find(title);
+            var todo = _todoRepository.Find(title);
 
             if (todo == null)
             {
@@ -56,12 +56,12 @@
             }
 
             todo.IsDone = true;
-            todoRepository.Save(todo);
+            _todoRepository.Save(todo);
         }
 
         public List<Todo> Add(String author, String title, String idGroup)
         {
-            if (todoRepository.Find(title) is not null)
+            if (_todoRepository.Find(title) is not null)
             {
                 throw new InvalidOperationException($"'{title}' already exists");
             }
@@ -76,7 +76,7 @@
                 throw new ArgumentException("Author is mandatory");
             }
 
-            todoRepository.Save(Todo.Builder()
+            _todoRepository.Save(Todo.Builder()
                     .TitleOf(title)
                     .IsDoneAs(false)
                     .AuthorOf(author)
@@ -84,7 +84,7 @@
                     .WithGroup(idGroup)
                     .Build());
 
-            return todoRepository.GetAll();
+            return _todoRepository.GetAll();
         }
 
     }

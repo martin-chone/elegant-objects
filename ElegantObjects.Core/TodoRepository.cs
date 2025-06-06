@@ -2,16 +2,16 @@
 {
     public class TodoRepository
     {
-        private List<Todo> todos = new List<Todo>();
+        private List<Todo> _todos = new List<Todo>();
 
         public virtual void Save(Todo todo)
         {
-            todos.Add(todo);
+            _todos.Add(todo);
         }
 
         public virtual List<Todo> GetAll()
         {
-            return todos;
+            return _todos;
         }
 
         public virtual Todo? Find(String desc)
