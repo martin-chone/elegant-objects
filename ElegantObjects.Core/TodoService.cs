@@ -49,7 +49,7 @@
             _todoRepository.Save(todo);
         }
 
-        public List<Todo> Add(string author, string title, string? idGroup)
+        public List<Todo> Add(string author, string title, string idGroup)
         {
             if (_todoRepository.Find(title) is not null)
             {
