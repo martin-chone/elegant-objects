@@ -21,16 +21,6 @@
                 throw new InvalidOperationException($"'{title}' already exist");
             }
 
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                throw new ArgumentException("Title is mandatory");
-            }
-
-            if (string.IsNullOrWhiteSpace(author))
-            {
-                throw new ArgumentException("Author is mandatory");
-            }
-        
             _todoRepository.Save(Todo.Builder()
                     .TitleOf(title)
                     .IsDoneAs(false)
@@ -64,16 +54,6 @@
             if (_todoRepository.Find(title) is not null)
             {
                 throw new InvalidOperationException($"'{title}' already exists");
-            }
-
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                throw new ArgumentException("Title is mandatory");
-            }
-
-            if (string.IsNullOrWhiteSpace(author))
-            {
-                throw new ArgumentException("Author is mandatory");
             }
 
             _todoRepository.Save(Todo.Builder()

@@ -161,6 +161,16 @@
 
             public Todo Build()
             {
+                if (string.IsNullOrWhiteSpace(Title))
+                {
+                    throw new ArgumentException("Title is mandatory");
+                }
+
+                if (string.IsNullOrWhiteSpace(Author))
+                {
+                    throw new ArgumentException("Author is mandatory");
+                }
+
                 return new Todo(this);
             }
         }
