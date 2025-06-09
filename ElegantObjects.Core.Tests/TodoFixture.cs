@@ -12,7 +12,7 @@
                     .Build();
         }
 
-        public static Todo WithTitle(string? title)
+        public static Todo WithTitle(string title)
         {
             return Todo.Builder()
                     .TitleOf(title)
@@ -22,7 +22,7 @@
                     .Build();
         }
 
-        public static Todo WithTitleAndCreatedAt(string? title, DateTime? createdAt)
+        public static Todo WithTitleAndCreatedAt(string title, DateTime createdAt)
         {
             return Todo.Builder()
                 .TitleOf(title)
@@ -32,7 +32,7 @@
                 .Build();
         }
 
-        public static Todo WithTitleAndDone(string? title)
+        public static Todo WithTitleAndDone(string title)
         {
             return Todo.Builder()
                     .TitleOf(title)
