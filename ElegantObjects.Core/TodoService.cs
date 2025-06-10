@@ -14,11 +14,11 @@
             return _todoRepository.GetAll();
         }
 
-        public List<Todo> Add(string title, string author)
+        public List<Todo> Add(Title title, Author author)
         {
             if (_todoRepository.Find(title) is not null)
             {
-                throw new InvalidOperationException($"'{title}' already exist");
+                throw new InvalidOperationException($"'{title.Value}' already exist");
             }
 
             _todoRepository.Save(Todo.Builder()
@@ -31,29 +31,29 @@
             return _todoRepository.GetAll();
         }
 
-        public void Done(string title)
+        public void Done(Title title)
         {
             var todo = _todoRepository.Find(title);
 
             if (todo == null)
             {
-                throw new InvalidOperationException($"'{title}' does not exist");
+                throw new InvalidOperationException($"'{title.Value}' does not exist");
             }
 
             if (todo.IsDone)
             {
-                throw new InvalidOperationException($"'{title}' is already done");
+                throw new InvalidOperationException($"'{title.Value}' is already done");
             }
 
             todo.IsDone = true;
             _todoRepository.Save(todo);
         }
 
-        public List<Todo> Add(string author, string title, string idGroup)
+        public List<Todo> Add(Author author, Title title, string idGroup)
         {
             if (_todoRepository.Find(title) is not null)
             {
-                throw new InvalidOperationException($"'{title}' already exists");
+                throw new InvalidOperationException($"'{title.Value}' already exists");
             }
 
             _todoRepository.Save(Todo.Builder()

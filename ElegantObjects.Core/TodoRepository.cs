@@ -19,7 +19,7 @@
         /// </summary>
         /// <param name="title">The title of the Todo to search for.</param>
         /// <returns>The Todo with the given title, or <c>null</c> if not found.</returns>
-        public virtual Todo? Find(string title)
+        public virtual Todo? Find(Title title)
         {
             return _todos.FirstOrDefault(t => t.Title.Equals(title));
         }

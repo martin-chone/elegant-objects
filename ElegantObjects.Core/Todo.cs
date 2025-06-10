@@ -2,10 +2,10 @@
 {
     public class Todo
     {
-        public string Title { get; set; }
+        public Title Title { get; set; }
         public string? Description { get; set; }
         public bool IsDone { get; set; }
-        public string Author { get; set; }
+        public Author Author { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? DoneAt { get; set; }
         public string? IdGroup { get; set; }
@@ -38,7 +38,7 @@
 
         public override int GetHashCode()
         {
-            return HashCode.Combine<string, bool>(Title, IsDone);
+            return HashCode.Combine<string, bool>(Title.Value, IsDone);
         }
 
         public override string ToString()
@@ -56,7 +56,7 @@
 
         public interface ITodoTitleBuilder
         {
-            ITodoIsDoneBuilder TitleOf(string title);
+            ITodoIsDoneBuilder TitleOf(Title title);
         }
 
         public interface ITodoIsDoneBuilder
@@ -66,7 +66,7 @@
 
         public interface ITodoAuthorBuilder
         {
-            ITodoCreatedAtBuilder AuthorOf(string author);
+            ITodoCreatedAtBuilder AuthorOf(Author author);
         }
 
         public interface ITodoCreatedAtBuilder
@@ -89,10 +89,10 @@
                                            ITodoOptionalBuilder
         {
 
-            public string Title { get; private set; }
+            public Title Title { get; private set; }
             public string? Description { get; private set; }
             public bool IsDone { get; private set; }
-            public string Author { get; private set; }
+            public Author Author { get; private set; }
             public DateTime CreatedAt { get; private set; }
             public DateTime? DoneAt { get; private set; }
             public string? IdGroup { get; private set; }
@@ -110,7 +110,7 @@
                 CreatedAt = DateTime.Now;
             }
 
-            public ITodoIsDoneBuilder TitleOf(string title)
+            public ITodoIsDoneBuilder TitleOf(Title title)
             {
                 Title = title;
 
@@ -124,7 +124,7 @@
                 return this;
             }
 
-            public ITodoCreatedAtBuilder AuthorOf(string author)
+            public ITodoCreatedAtBuilder AuthorOf(Author author)
             {
                 Author = author;
 
@@ -161,16 +161,6 @@
 
             public Todo Build()
             {
-                if (string.IsNullOrWhiteSpace(Title))
-                {
-                    throw new ArgumentException("Title is mandatory");
-                }
-
-                if (string.IsNullOrWhiteSpace(Author))
-                {
-                    throw new ArgumentException("Author is mandatory");
-                }
-
                 return new Todo(this);
             }
         }

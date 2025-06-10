@@ -19,7 +19,10 @@ namespace ElegantObjects.Core.Tests
 
             _todoRepository.Setup(r => r.GetAll()).Returns(new List<Todo> { TodoFixture.DefaultTodo() });
 
-            var todos = todoService.Add("todos", "John Doe");
+            var title = new Title("todos");
+            var author = new Author("John Doe");
+
+            var todos = todoService.Add(title, author);
 
             _todoRepository.Verify(r => r.Save(It.IsAny<Todo>()), Times.Once);
             todos.Should().NotBeEmpty();
@@ -30,7 +33,9 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            Action act = () => todoService.Add("", "John Doe");
+            var author = new Author("John Doe");
+
+            Action act = () => todoService.Add(new Title(""), author);
 
             act.Should().Throw<Exception>().WithMessage("Title is mandatory");
         }
@@ -40,7 +45,9 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            Action act = () => todoService.Add(null, "John Doe");
+            var author = new Author("John Doe");
+
+            Action act = () => todoService.Add(new Title(null), author);
 
             act.Should().Throw<Exception>().WithMessage("Title is mandatory");
         }
@@ -50,11 +57,14 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            _todoRepository.Setup(r => r.Find("Already here")).Returns(TodoFixture.WithTitle("Already here"));
+            var title = new Title("todos");
+            var author = new Author("John Doe");
 
-            Action act = () => todoService.Add("Already here", "John Doe");
+            _todoRepository.Setup(r => r.Find(title)).Returns(TodoFixture.WithTitle(title));
 
-            act.Should().Throw<Exception>().WithMessage("'Already here' already exist");
+            Action act = () => todoService.Add(title, author);
+
+            act.Should().Throw<Exception>().WithMessage("'todos' already exist");
         }
 
         [Fact]
@@ -62,15 +72,20 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            var todo1 = TodoFixture.WithTitleAndCreatedAt("Todo 1", new DateTime(2025, 4, 23, 10, 25, 0));
-            var todo2 = TodoFixture.WithTitleAndCreatedAt("Todo 2", new DateTime(2025, 4, 23, 11, 25, 0));
-            var todo3 = TodoFixture.WithTitleAndCreatedAt("Todo 3", new DateTime(2025, 4, 23, 13, 25, 0));
+            var title1 = new Title("Todo 1");
+            var title2 = new Title("Todo 2");
+            var title3 = new Title("Todo 3");
+            var author = new Author("John Doe");
+
+            var todo1 = TodoFixture.WithTitleAndCreatedAt(title1, new DateTime(2025, 4, 23, 10, 25, 0));
+            var todo2 = TodoFixture.WithTitleAndCreatedAt(title2, new DateTime(2025, 4, 23, 11, 25, 0));
+            var todo3 = TodoFixture.WithTitleAndCreatedAt(title3, new DateTime(2025, 4, 23, 13, 25, 0));
 
             _todoRepository.Setup(r => r.GetAll()).Returns(new List<Todo> { todo1, todo2, todo3 });
 
-            todoService.Add("Todo 1", "John Doe");
-            todoService.Add("Todo 2", "John Doe");
-            List<Todo> todos = todoService.Add("Todo 3", "John Doe");
+            todoService.Add(title1, author);
+            todoService.Add(title2, author);
+            List<Todo> todos = todoService.Add(title3, author);
 
             _todoRepository.Verify(r => r.Save(It.IsAny<Todo>()), Times.Exactly(3));
             todos.Should().ContainInOrder(todo1, todo2, todo3);
@@ -81,13 +96,15 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            _todoRepository.Setup(r => r.Find("Fini")).Returns(TodoFixture.WithTitle("Fini"));
-            _todoRepository.Setup(r => r.GetAll()).Returns(new List<Todo> { TodoFixture.WithTitleAndDone("Fini") });
+            var title = new Title("Fini");
 
-            todoService.Done("Fini");
+            _todoRepository.Setup(r => r.Find(title)).Returns(TodoFixture.WithTitle(title));
+            _todoRepository.Setup(r => r.GetAll()).Returns(new List<Todo> { TodoFixture.WithTitleAndDone(title) });
 
-            var todoDone = todoService.Todos().First(t => t.Title == "Fini");
-            todoDone.Title.Should().Be("Fini");
+            todoService.Done(title);
+
+            var todoDone = todoService.Todos().First(t => t.Title == title);
+            todoDone.Title.Should().Be(title);
             todoDone.IsDone.Should().BeTrue();
             todoDone.DoneAt.Should().NotBeNull();
         }
@@ -97,9 +114,11 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            _todoRepository.Setup(r => r.Find("Fini")).Returns((Todo)null);
+            var title = new Title("Fini");
 
-            Action act = () => todoService.Done("Fini");
+            _todoRepository.Setup(r => r.Find(title)).Returns((Todo)null);
+
+            Action act = () => todoService.Done(title);
 
             act.Should().Throw<Exception>().WithMessage("'Fini' does not exist");
         }
@@ -109,7 +128,9 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            Action act = () => todoService.Add("Sans auteur", "");
+            var title = new Title("Sans auteur");
+
+            Action act = () => todoService.Add(title, new Author(""));
 
             act.Should().Throw<Exception>().WithMessage("Author is mandatory");
         }
@@ -119,7 +140,9 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            Action act = () => todoService.Add("Sans auteur", null);
+            var title = new Title("Sans auteur");
+
+            Action act = () => todoService.Add(title, new Author(""));
 
             act.Should().Throw<Exception>().WithMessage("Author is mandatory");
         }
@@ -132,7 +155,10 @@ namespace ElegantObjects.Core.Tests
 
             _todoRepository.Setup(r => r.GetAll()).Returns(new List<Todo> { TodoFixture.WithGroupdId("front todo") });
 
-            var todos = todoService.Add("John Doe", "toto", "front todo");
+            var title = new Title("John Doe");
+            var author = new Author("toto");
+
+            var todos = todoService.Add(author, title, "front todo");
 
             todos[0].IdGroup.Should().Be("front todo");
         }
@@ -142,9 +168,11 @@ namespace ElegantObjects.Core.Tests
         {
             TodoService todoService = new TodoService(_todoRepository.Object);
 
-            _todoRepository.Setup(r => r.Find("done")).Returns(TodoFixture.WithTitleAndDone("done"));
+            var title = new Title("done");
 
-            Action act = () => todoService.Done("done");
+            _todoRepository.Setup(r => r.Find(title)).Returns(TodoFixture.WithTitleAndDone(title));
+
+            Action act = () => todoService.Done(title);
 
             act.Should().Throw<Exception>().WithMessage("'done' is already done");
         }
