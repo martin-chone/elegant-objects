@@ -21,12 +21,8 @@
                 throw new InvalidOperationException($"'{title.Value}' already exist");
             }
 
-            _todoRepository.Save(Todo.Builder()
-                    .TitleOf(title)
-                    .IsDoneAs(false)
-                    .AuthorOf(author)
-                    .CreatedAtDate(DateTime.Now)
-                    .Build());
+            var todo = Todo.Create(title, author);
+            _todoRepository.Save(todo);
 
             return _todoRepository.GetAll();
         }
@@ -40,12 +36,13 @@
                 throw new InvalidOperationException($"'{title.Value}' does not exist");
             }
 
-            if (todo.IsDone)
+            if (todo.Completed)
             {
                 throw new InvalidOperationException($"'{title.Value}' is already done");
             }
 
-            todo.IsDone = true;
+            todo.Complete(DateTime.Now);
+
             _todoRepository.Save(todo);
         }
 
@@ -56,13 +53,8 @@
                 throw new InvalidOperationException($"'{title.Value}' already exists");
             }
 
-            _todoRepository.Save(Todo.Builder()
-                    .TitleOf(title)
-                    .IsDoneAs(false)
-                    .AuthorOf(author)
-                    .CreatedAtDate(DateTime.Now)
-                    .WithGroup(idGroup)
-                    .Build());
+            var todo = Todo.CreateWithGroup(title, author, idGroup);
+            _todoRepository.Save(todo);
 
             return _todoRepository.GetAll();
         }

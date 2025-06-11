@@ -2,28 +2,45 @@
 {
     public class Todo
     {
-        public Title Title { get; set; }
-        public string? Description { get; set; }
-        public bool IsDone { get; set; }
-        public Author Author { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? DoneAt { get; set; }
-        public string? IdGroup { get; set; }
+        public Title Title { get; private set; }
+        public string? Description { get; private set; }
+        public bool Completed { get; private set; }
+        public Author Author { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? CompletedAt { get; private set; }
+        public string? IdGroup { get; private set; }
 
-        private Todo(TodoBuilder builder)
+        private Todo(Title title, string? description, bool completed, Author author, DateTime? completedAt, DateTime createdAt, string? idGroup)
         {
-            Title = builder.Title;
-            Description = builder.Description;
-            IsDone = builder.IsDone;
-            Author = builder.Author;
-            CreatedAt = builder.CreatedAt;
-            DoneAt = builder.DoneAt;
-            IdGroup = builder.IdGroup;
+            Title = title;
+            Description = description;
+            Completed = completed;
+            Author = author;
+            CompletedAt = completedAt;
+            CreatedAt = createdAt;
+            IdGroup = idGroup;
         }
 
-        public static ITodoTitleBuilder Builder()
+        private Todo(Title title, Author author, DateTime createdAt, string idGroup)
+            : this(title, null, false, author, null, createdAt, idGroup) { }
+
+        public static Todo CreateWithGroup(Title title, Author author, string idGroup)
         {
-            return new TodoBuilder();
+            return new Todo(title, author, DateTime.Now, idGroup);
+        }
+
+        public Todo(Title title, Author author, DateTime createdAt)
+            : this(title, null, false, author, null, createdAt, null) { }
+
+        public static Todo Create(Title title, Author author)
+        {
+            return new Todo(title, author, DateTime.Now);
+        }
+
+        public void Complete(DateTime completedAt) 
+        {
+            Completed = true;
+            CompletedAt = completedAt;
         }
 
         public override bool Equals(object? obj)
@@ -33,12 +50,12 @@
 
             var that = (Todo)obj;
             return string.Equals(Title, that.Title) &&
-                   IsDone == that.IsDone;
+                   Completed == that.Completed;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine<string, bool>(Title.Value, IsDone);
+            return HashCode.Combine<string, bool>(Title.Value, Completed);
         }
 
         public override string ToString()
@@ -46,124 +63,12 @@
             return "Todo{" +
                     "title='" + Title + '\'' +
                     ", description='" + Description + '\'' +
-                    ", isDone=" + IsDone +
+                    ", isDone=" + Completed +
                     ", author='" + Author + '\'' +
                     ", createdAt=" + CreatedAt +
-                    ", doneAt=" + DoneAt +
+                    ", doneAt=" + CompletedAt +
                     ", idGroup='" + IdGroup + '\'' +
                     '}';
         }
-
-        public interface ITodoTitleBuilder
-        {
-            ITodoIsDoneBuilder TitleOf(Title title);
-        }
-
-        public interface ITodoIsDoneBuilder
-        {
-            ITodoAuthorBuilder IsDoneAs(bool isDone);
-        }
-
-        public interface ITodoAuthorBuilder
-        {
-            ITodoCreatedAtBuilder AuthorOf(Author author);
-        }
-
-        public interface ITodoCreatedAtBuilder
-        {
-            ITodoOptionalBuilder CreatedAtDate(DateTime createdAt);
-        }
-
-        public interface ITodoOptionalBuilder
-        {
-            ITodoOptionalBuilder DescriptionOf(string? description);
-            ITodoOptionalBuilder DoneAtDate(DateTime? doneAt);
-            ITodoOptionalBuilder WithGroup(string? idGroup);
-            Todo Build();
-        }
-
-        private sealed class TodoBuilder : ITodoTitleBuilder,
-                                           ITodoIsDoneBuilder,
-                                           ITodoAuthorBuilder,
-                                           ITodoCreatedAtBuilder,
-                                           ITodoOptionalBuilder
-        {
-
-            public Title Title { get; private set; }
-            public string? Description { get; private set; }
-            public bool IsDone { get; private set; }
-            public Author Author { get; private set; }
-            public DateTime CreatedAt { get; private set; }
-            public DateTime? DoneAt { get; private set; }
-            public string? IdGroup { get; private set; }
-
-            public TodoBuilder()
-            {
-                Title = null!;
-                Author = null!;
-
-                Description = null;
-                IdGroup = null;
-                DoneAt = null;
-
-                IsDone = false;
-                CreatedAt = DateTime.Now;
-            }
-
-            public ITodoIsDoneBuilder TitleOf(Title title)
-            {
-                Title = title;
-
-                return this;
-            }
-
-            public ITodoAuthorBuilder IsDoneAs(bool isDone)
-            {
-                IsDone = isDone;
-
-                return this;
-            }
-
-            public ITodoCreatedAtBuilder AuthorOf(Author author)
-            {
-                Author = author;
-
-                return this;
-            }
-
-            public ITodoOptionalBuilder CreatedAtDate(DateTime createdAt)
-            {
-                CreatedAt = createdAt;
-
-                return this;
-            }
-
-            public ITodoOptionalBuilder DoneAtDate(DateTime? doneAt)
-            {
-                DoneAt = doneAt;
-
-                return this;
-            }
-
-            public ITodoOptionalBuilder WithGroup(string? idGroup)
-            {
-                IdGroup = idGroup;
-
-                return this;
-            }
-
-            public ITodoOptionalBuilder DescriptionOf(string? description)
-            {
-                Description = description;
-
-                return this;
-            }
-
-            public Todo Build()
-            {
-                return new Todo(this);
-            }
-        }
-
     }
 }
