@@ -4,12 +4,17 @@
     {
         private List<Todo> _todos = new List<Todo>();
 
-        public virtual void Save(Todo todo)
+        public void Save(Todo todo)
         {
-            _todos.Add(todo);
+            var existing = Find(todo.Title);
+
+            if (existing != null)
+                Delete(existing);
+
+            Add(todo);
         }
 
-        public virtual List<Todo> GetAll()
+        public List<Todo> GetAll()
         {
             return _todos;
         }
@@ -19,10 +24,19 @@
         /// </summary>
         /// <param name="title">The title of the Todo to search for.</param>
         /// <returns>The Todo with the given title, or <c>null</c> if not found.</returns>
-        public virtual Todo? Find(Title title)
+        public Todo? Find(Title title)
         {
             return _todos.FirstOrDefault(t => t.Title.Equals(title));
         }
 
+        private void Add(Todo todo)
+        {
+            _todos.Add(todo);
+        }
+
+        private void Delete(Todo todo)
+        {
+            _todos.Remove(todo);
+        }
     }
 }

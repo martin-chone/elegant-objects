@@ -2,13 +2,13 @@
 {
     public class Todo
     {
-        public Title Title { get; private set; }
-        public string? Description { get; private set; }
-        public bool Completed { get; private set; }
-        public Author Author { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? CompletedAt { get; private set; }
-        public string? IdGroup { get; private set; }
+        public Title Title { get; }
+        public string? Description { get; }
+        public bool Completed { get; }
+        public Author Author { get; }
+        public DateTime CreatedAt { get; }
+        public DateTime? CompletedAt { get; }
+        public string? IdGroup { get; }
 
         private Todo(Title title, string? description, bool completed, Author author, DateTime? completedAt, DateTime createdAt, string? idGroup)
         {
@@ -21,26 +21,19 @@
             IdGroup = idGroup;
         }
 
-        private Todo(Title title, Author author, DateTime createdAt, string idGroup)
-            : this(title, null, false, author, null, createdAt, idGroup) { }
-
-        public static Todo CreateWithGroup(Title title, Author author, string idGroup)
+        public static Todo CreateWithGroup(Title title, Author author, DateTime createdAt, string idGroup)
         {
-            return new Todo(title, author, DateTime.Now, idGroup);
+            return new Todo(title, null, false, author, null, createdAt, idGroup);
         }
 
-        public Todo(Title title, Author author, DateTime createdAt)
-            : this(title, null, false, author, null, createdAt, null) { }
-
-        public static Todo Create(Title title, Author author)
+        public static Todo Create(Title title, Author author, DateTime createdAt)
         {
-            return new Todo(title, author, DateTime.Now);
+            return new Todo(title, null, false, author, null, createdAt, null);
         }
 
-        public void Complete(DateTime completedAt) 
+        public Todo Complete(DateTime completedAt) 
         {
-            Completed = true;
-            CompletedAt = completedAt;
+            return new Todo(Title, Description, true, Author, completedAt, CreatedAt, IdGroup);
         }
 
         public override bool Equals(object? obj)
@@ -60,15 +53,7 @@
 
         public override string ToString()
         {
-            return "Todo{" +
-                    "title='" + Title + '\'' +
-                    ", description='" + Description + '\'' +
-                    ", isDone=" + Completed +
-                    ", author='" + Author + '\'' +
-                    ", createdAt=" + CreatedAt +
-                    ", doneAt=" + CompletedAt +
-                    ", idGroup='" + IdGroup + '\'' +
-                    '}';
+            return $"{Title.Value} - {(Completed? "Done" : "Pending")} - {Author}";
         }
     }
 }

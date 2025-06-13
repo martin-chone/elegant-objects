@@ -21,7 +21,7 @@
                 throw new InvalidOperationException($"'{title.Value}' already exist");
             }
 
-            var todo = Todo.Create(title, author);
+            var todo = Todo.Create(title, author, DateTime.Now);
             _todoRepository.Save(todo);
 
             return _todoRepository.GetAll();
@@ -41,9 +41,9 @@
                 throw new InvalidOperationException($"'{title.Value}' is already done");
             }
 
-            todo.Complete(DateTime.Now);
+            var todoCompleted = todo.Complete(DateTime.Now);
 
-            _todoRepository.Save(todo);
+            _todoRepository.Save(todoCompleted);
         }
 
         public List<Todo> Add(Author author, Title title, string idGroup)
@@ -53,7 +53,7 @@
                 throw new InvalidOperationException($"'{title.Value}' already exists");
             }
 
-            var todo = Todo.CreateWithGroup(title, author, idGroup);
+            var todo = Todo.CreateWithGroup(title, author, DateTime.Now, idGroup);
             _todoRepository.Save(todo);
 
             return _todoRepository.GetAll();

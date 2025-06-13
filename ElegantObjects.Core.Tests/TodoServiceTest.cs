@@ -1,5 +1,4 @@
-﻿using Moq;
-using FluentAssertions;
+﻿using FluentAssertions;
 
 namespace ElegantObjects.Core.Tests
 {
@@ -73,7 +72,8 @@ namespace ElegantObjects.Core.Tests
             _todoService.Add(title, AuthorFixture.JohnDoe());
             _todoService.Done(title);
 
-            var todoDone = _todoService.Todos().First(t => t.Title == title);
+            var todoDone = _todoService.Todos().First(t => t.Title.Equals(title));
+
             todoDone.Title.Should().Be(title);
             todoDone.Completed.Should().BeTrue();
             todoDone.CompletedAt.Should().NotBeNull();
